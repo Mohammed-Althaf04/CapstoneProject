@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sms-service
+spec:
+  type: NodePort      # Added missing service type
+  ports:
+  - port: 8018        # Combined fields into a single list item
+    targetPort: 8018  # Target container port
+    nodePort: 30008   # External port exposed on nodes
+  selector:
+    app: sms

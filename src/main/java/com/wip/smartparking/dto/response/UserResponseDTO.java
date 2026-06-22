@@ -9,6 +9,21 @@ public class UserResponseDTO {
     private String email;
     private String phone;
     private UserRole role;
+    
+	public UserResponseDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public UserResponseDTO(Long userId, String name, String email, String phone, UserRole role) {
+		super();
+		this.userId = userId;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.role = role;
+	}
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -40,7 +55,10 @@ public class UserResponseDTO {
 		this.role = role;
 	}
 
-    // Generate Getters & Setters
-    
-    
+	@Override
+	public String toString() {
+		return "UserResponseDTO [userId=" + userId + ", name=" + name + ", email=" + email + ", phone=" + phone
+				+ ", role=" + role + "]";
+	}
+	
 }

@@ -7,18 +7,28 @@ import com.wip.smartparking.enums.ReservationStatus;
 public class ReservationResponseDTO {
 
     private Long reservationId;
-
     private Long userId;
-
     private Long vehicleId;
-
     private Long slotId;
-
     private LocalDateTime startTime;
-
     private LocalDateTime endTime;
-
     private ReservationStatus status;
+    
+	public ReservationResponseDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ReservationResponseDTO(Long reservationId, Long userId, Long vehicleId, Long slotId, LocalDateTime startTime, LocalDateTime endTime, ReservationStatus status) {
+		super();
+		this.reservationId = reservationId;
+		this.userId = userId;
+		this.vehicleId = vehicleId;
+		this.slotId = slotId;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.status = status;
+	}
 
 	public Long getReservationId() {
 		return reservationId;
@@ -76,7 +86,10 @@ public class ReservationResponseDTO {
 		this.status = status;
 	}
 
-    // Generate Getters & Setters
-    
+	@Override
+	public String toString() {
+		return "ReservationResponseDTO [reservationId=" + reservationId + ", userId=" + userId + ", vehicleId="
+				+ vehicleId + ", slotId=" + slotId + ", startTime=" + startTime + ", endTime=" + endTime + ", status=" + status + "]";
+	} 
     
 }

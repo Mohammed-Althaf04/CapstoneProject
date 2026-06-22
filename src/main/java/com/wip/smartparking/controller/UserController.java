@@ -29,7 +29,7 @@ public class UserController {
         return UserMapper.toResponseDTO(savedUser);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("getAUser/{id}")
     public UserResponseDTO getUserById(@PathVariable Long id) {
 
         User user = userService.getUserById(id);
@@ -37,12 +37,12 @@ public class UserController {
         return UserMapper.toResponseDTO(user);
     }
 
-    @GetMapping
+    @GetMapping("/listAll")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return "User deleted successfully";

@@ -8,6 +8,20 @@ public class VehicleResponseDTO {
     private String vehicleNumber;
     private VehicleType vehicleType;
     private Long userId;
+    
+	public VehicleResponseDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public VehicleResponseDTO(Long vehicleId, String vehicleNumber, VehicleType vehicleType, Long userId) {
+		super();
+		this.vehicleId = vehicleId;
+		this.vehicleNumber = vehicleNumber;
+		this.vehicleType = vehicleType;
+		this.userId = userId;
+	}
+
 	public Long getVehicleId() {
 		return vehicleId;
 	}
@@ -33,7 +47,10 @@ public class VehicleResponseDTO {
 		this.userId = userId;
 	}
 
-    // Generate Getters & Setters
-    
+	@Override
+	public String toString() {
+		return "VehicleResponseDTO [vehicleId=" + vehicleId + ", vehicleNumber=" + vehicleNumber + ", vehicleType="
+				+ vehicleType + ", userId=" + userId + "]";
+	}
     
 }

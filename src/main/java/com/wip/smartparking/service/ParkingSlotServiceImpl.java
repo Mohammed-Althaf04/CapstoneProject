@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wip.smartparking.entity.ParkingSlot;
+import com.wip.smartparking.enums.SlotStatus;
+import com.wip.smartparking.exception.ParkingSlotException;
 import com.wip.smartparking.exception.ResourceNotFoundException;
 import com.wip.smartparking.repository.ParkingSlotRepository;
 
@@ -38,8 +40,12 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
 
         ParkingSlot slot = parkingSlotRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Parking Slot not found with id : " + id));
+                        new ResourceNotFoundException("Slot not found"));
+
+        if(slot.getStatus() == SlotStatus.OCCUPIED) {
+            throw new ParkingSlotException(
+                    "Cannot delete occupied slot");
+        }
 
         parkingSlotRepository.delete(slot);
     }

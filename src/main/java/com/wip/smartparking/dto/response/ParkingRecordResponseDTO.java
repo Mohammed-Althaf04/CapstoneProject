@@ -10,8 +10,24 @@ public class ParkingRecordResponseDTO {
     private Double duration;
     private Long vehicleId;
     private Long slotId;
+    
+    public ParkingRecordResponseDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+    
+	public ParkingRecordResponseDTO(Long recordId, LocalDateTime entryTime, LocalDateTime exitTime, Double duration,
+			Long vehicleId, Long slotId) {
+		super();
+		this.recordId = recordId;
+		this.entryTime = entryTime;
+		this.exitTime = exitTime;
+		this.duration = duration;
+		this.vehicleId = vehicleId;
+		this.slotId = slotId;
+	}
 
-    public Long getRecordId() {
+	public Long getRecordId() {
         return recordId;
     }
 
@@ -58,4 +74,11 @@ public class ParkingRecordResponseDTO {
     public void setSlotId(Long slotId) {
         this.slotId = slotId;
     }
+
+	@Override
+	public String toString() {
+		return "ParkingRecordResponseDTO [recordId=" + recordId + ", entryTime=" + entryTime + ", exitTime=" + exitTime
+				+ ", duration=" + duration + ", vehicleId=" + vehicleId + ", slotId=" + slotId + "]";
+	}
+    
 }

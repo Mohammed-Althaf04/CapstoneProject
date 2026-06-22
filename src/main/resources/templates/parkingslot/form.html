@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Slot</title>
+</head>
+<body>
+<div th:replace="layout/navbar :: navbar"></div>
+ 
+<div class="container">
+    <div class="card form-card">
+        <h2>🅿️ Create Parking Slot</h2>
+ 
+        <form action="/ui/slots/save" method="post" th:object="${parkingSlot}">
+            <!-- Validation Summary Alert Box -->
+            <div th:if="${#fields.hasErrors('*')}" style="background-color: #fee2e2; color: #991b1b; padding: 14px 18px; border-radius: 8px; font-size: 13.5px; font-weight: 600; margin-bottom: 20px; text-align: left; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <strong style="display: block; margin-bottom: 6px;">⚠️ Please correct the following errors:</strong>
+                <ul style="margin: 0; padding-left: 20px; font-size: 13px; font-weight: 500; line-height: 1.5;">
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Slot Number</label>
+                    <input type="text" th:field="*{slotNumber}" placeholder="e.g. A-101" required/>
+                    <div th:if="${#fields.hasErrors('slotNumber')}" th:errors="*{slotNumber}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                </div>
+ 
+                <div class="form-group">
+                    <label>Slot Type</label>
+                    <select th:field="*{slotType}" required>
+                        <option value="">-- Select Slot Type --</option>
+                        <option value="CAR">Car</option>
+                        <option value="BIKE">Bike</option>
+                        <option value="EV">Electric Vehicle (EV)</option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('slotType')}" th:errors="*{slotType}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                </div>
+ 
+                <div class="form-group">
+                    <label>Floor Number</label>
+                    <input type="number" th:field="*{floorNo}" min="1" placeholder="e.g. 1" required/>
+                    <div th:if="${#fields.hasErrors('floorNo')}" th:errors="*{floorNo}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                </div>
+ 
+                <div class="form-group">
+                    <label>Initial Status</label>
+                    <select th:field="*{status}" required>
+                        <option value="">-- Select Status --</option>
+                        <option value="AVAILABLE">Available</option>
+                        <option value="RESERVED">Reserved</option>
+                        <option value="OCCUPIED">Occupied</option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                </div>
+            </div>
+ 
+            <div class="form-actions">
+                <a href="/ui/slots" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save Slot</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

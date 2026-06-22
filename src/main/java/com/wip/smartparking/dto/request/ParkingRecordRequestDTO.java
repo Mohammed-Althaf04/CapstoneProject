@@ -19,7 +19,22 @@ public class ParkingRecordRequestDTO {
     @NotNull(message = "Slot Id is required")
     private Long slotId;
 
-    public LocalDateTime getEntryTime() {
+    public ParkingRecordRequestDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ParkingRecordRequestDTO(LocalDateTime entryTime,LocalDateTime exitTime, Double duration,Long vehicleId,
+			Long slotId) {
+		super();
+		this.entryTime = entryTime;
+		this.exitTime = exitTime;
+		this.duration = duration;
+		this.vehicleId = vehicleId;
+		this.slotId = slotId;
+	}
+
+	public LocalDateTime getEntryTime() {
         return entryTime;
     }
 
@@ -58,4 +73,11 @@ public class ParkingRecordRequestDTO {
     public void setSlotId(Long slotId) {
         this.slotId = slotId;
     }
+
+	@Override
+	public String toString() {
+		return "ParkingRecordRequestDTO [entryTime=" + entryTime + ", exitTime=" + exitTime + ", duration=" + duration
+				+ ", vehicleId=" + vehicleId + ", slotId=" + slotId + "]";
+	}
+    
 }

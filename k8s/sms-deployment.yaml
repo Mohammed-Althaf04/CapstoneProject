@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sms-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sms
+  template:
+    metadata:
+      labels:
+        app: sms
+    spec:
+      containers:
+      - name: sms-container
+        image: sms-app:latest
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 8018
+        env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: sms-config
+              key: SPRING_DATASOURCE_URL
+        - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+          valueFrom:
+            configMapKeyRef: 
+              name: sms-config
+              key: SPRING_JPA_HIBERNATE_DDL_AUTO         
+        - name: SPRING_JPA_SHOW_SQL
+          valueFrom:
+            configMapKeyRef:
+              name: sms-config
+              key: SPRING_JPA_SHOW_SQL
+        - name: SPRING_JPA_DATABASE_PLATFORM
+          valueFrom:
+            configMapKeyRef: 
+              name: sms-config
+              key: SPRING_JPA_DATABASE_PLATFORM
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: sms-secret
+              key: SPRING_DATASOURCE_USERNAME
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef: 
+              name: sms-secret # Fixed indentation here (added 2 spaces)
+              key: SPRING_DATASOURCE_PASSWORD 

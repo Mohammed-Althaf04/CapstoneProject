@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<body>
+ 
+<!-- Reusable Navbar Fragment -->
+<div th:fragment="navbar">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+ 
+    <div style="background: #0f172a; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">🚗</span>
+            <span style="color: #ffffff; font-weight: 700; font-size: 18px; letter-spacing: -0.5px;">SmartParking</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 4px;">
+            <a href="/ui/home" style="color: #cbd5e1; font-weight: 500; font-size: 14px; padding: 8px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#1e293b';" onmouseout="this.style.color='#cbd5e1'; this.style.backgroundColor='transparent';">Dashboard</a>
+            
+            <a href="/ui/users" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" style="color: #cbd5e1; font-weight: 500; font-size: 14px; padding: 8px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#1e293b';" onmouseout="this.style.color='#cbd5e1'; this.style.backgroundColor='transparent';">Users</a>
+            
+            <a href="/ui/vehicles" style="color: #cbd5e1; font-weight: 500; font-size: 14px; padding: 8px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#1e293b';" onmouseout="this.style.color='#cbd5e1'; this.style.backgroundColor='transparent';">Vehicles</a>
+            
+            <a href="/ui/slots" style="color: #cbd5e1; font-weight: 500; font-size: 14px; padding: 8px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#1e293b';" onmouseout="this.style.color='#cbd5e1'; this.style.backgroundColor='transparent';">Slots</a>
+            
+            <a href="/ui/records" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" style="color: #cbd5e1; font-weight: 500; font-size: 14px; padding: 8px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#1e293b';" onmouseout="this.style.color='#cbd5e1'; this.style.backgroundColor='transparent';">Records</a>
+            
+            <a href="/ui/reservations" style="color: #cbd5e1; font-weight: 500; font-size: 14px; padding: 8px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#1e293b';" onmouseout="this.style.color='#cbd5e1'; this.style.backgroundColor='transparent';">Reservations</a>
+            
+            <a href="/ui/billing" th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''USER'')')}" style="color: #cbd5e1; font-weight: 500; font-size: 14px; padding: 8px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#1e293b';" onmouseout="this.style.color='#cbd5e1'; this.style.backgroundColor='transparent';">Billing</a>
+        </div>
+        <div>
+            <a href="/logout" style="background: #334155; color: #ffffff; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;" onmouseover="this.style.backgroundColor='#475569';" onmouseout="this.style.backgroundColor='#334155';">
+                Logout 🚪
+            </a>
+        </div>
+    </div>
+</div>
+ 
+</body>
+</html>

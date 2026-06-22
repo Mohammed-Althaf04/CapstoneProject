@@ -11,7 +11,6 @@ public class ParkingRecordMapper {
     public static ParkingRecord toEntity(ParkingRecordRequestDTO dto) {
 
         ParkingRecord record = new ParkingRecord();
-
         record.setEntryTime(dto.getEntryTime());
         record.setExitTime(dto.getExitTime());
         record.setDuration(dto.getDuration());

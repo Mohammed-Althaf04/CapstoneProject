@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${reservation.reservationId != null ? 'Edit Reservation' : 'New Reservation'}">New Reservation</title>
+</head>
+<body>
+<div th:replace="layout/navbar :: navbar"></div>
+    <div class="container">
+        <div class="card form-card">
+            <h2 th:text="${reservation.reservationId != null ? '📅 Edit Reservation' : '📅 Create Reservation'}">📅 Create Reservation</h2>
+ 
+            <!-- Error Alert Box -->
+            <div th:if="${error}" style="background-color: #fee2e2; color: #991b1b; padding: 14px 18px; border-radius: 8px; font-size: 13.5px; font-weight: 600; margin-bottom: 20px; text-align: left; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <span>⚠️ <span th:text="${error}"></span></span>
+            </div>
+ 
+            <form action="/ui/reservations/save" method="post">
+                <input type="hidden" name="reservationId" th:value="${reservation.reservationId}" />
+                
+                <div class="form-grid">
+                    <!-- Admin User Selection -->
+                    <div class="form-group" th:if="${!isCustomer}">
+                        <label>Select User</label>
+                        <select name="userId" required>
+                            <option value="">-- Select User --</option>
+                            <option th:each="u : ${users}"
+                                    th:value="${u.userId}"
+                                    th:selected="${reservation.user != null and reservation.user.userId == u.userId}"
+                                    th:text="${u.userId + ' - ' + u.name}">
+                            </option>
+                        </select>
+                    </div>
+ 
+                    <!-- Customer User Read-Only Display -->
+                    <div class="form-group" th:if="${isCustomer}">
+                        <label>User / Guest</label>
+                        <input type="text" th:value="${reservation.user != null ? reservation.user.name : (currentUser != null ? currentUser.name : 'Current User')}" readonly style="background-color: #e2e8f0; cursor: not-allowed;" />
+                        <input type="hidden" name="userId" th:value="${reservation.user != null ? reservation.user.userId : defaultUserId}" />
+                    </div>
+ 
+                    <!-- Vehicle Selection -->
+                    <div class="form-group">
+                        <label>Select Vehicle</label>
+                        <select name="vehicleId" id="vehicleSelect" required>
+                            <option value="">-- Select Vehicle --</option>
+                            <option th:each="v : ${vehicles}"
+                                    th:value="${v.vehicleId}"
+                                    th:attr="data-user-id=${v.user != null ? v.user.userId : ''}"
+                                    th:selected="${reservation.vehicle != null and reservation.vehicle.vehicleId == v.vehicleId}"
+                                    th:text="${v.vehicleNumber + ' (' + v.vehicleType + ')'}">
+                            </option>
+                        </select>
+                    </div>
+ 
+                    <div class="form-group">
+                        <label>Select Parking Slot</label>
+                        <select name="slotId" required>
+                            <option value="">-- Select Slot --</option>
+                            <option th:each="s : ${slots}"
+                                    th:value="${s.slotId}"
+                                    th:selected="${reservation.parkingSlot != null and reservation.parkingSlot.slotId == s.slotId}"
+                                    th:text="${s.slotNumber + ' - Floor ' + s.floorNo + ' (' + s.slotType + ')'}">
+                            </option>
+                        </select>
+                        <div id="slotBookingsContainer" style="margin-top: 10px; display: none; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px;">
+                            <label style="font-size: 12px; color: #475569; font-weight: 600; display: block; margin-bottom: 4px;">📅 Reserved Times for this Slot:</label>
+                            <ul id="slotBookingsList" style="margin: 0; padding-left: 18px; font-size: 11.5px; color: #dc2626; font-weight: 500; line-height: 1.5;">
+                            </ul>
+                        </div>
+                    </div>
+ 
+                    <!-- Start Time -->
+                    <div class="form-group">
+                        <label>Start Time</label>
+                        <input type="datetime-local" name="startTime" th:value="${reservation.startTime != null ? #temporals.format(reservation.startTime, 'yyyy-MM-dd''T''HH:mm') : ''}" required />
+                    </div>
+ 
+                    <!-- End Time -->
+                    <div class="form-group">
+                        <label>End Time</label>
+                        <input type="datetime-local" name="endTime" th:value="${reservation.endTime != null ? #temporals.format(reservation.endTime, 'yyyy-MM-dd''T''HH:mm') : ''}" required />
+                    </div>
+ 
+                    <div class="form-group">
+                        <label>Booking Status</label>
+                        <select name="status" required>
+                            <option value="CONFIRMED" th:selected="${reservation.status != null and reservation.status.name() == 'CONFIRMED'}">Confirmed</option>
+                            <option value="CANCELLED" th:selected="${reservation.status != null and reservation.status.name() == 'CANCELLED'}">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+ 
+                <div class="form-actions">
+                    <a href="/ui/reservations" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary" th:text="${reservation.reservationId != null ? 'Update Reservation' : 'Book Reservation'}">Book Reservation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+ 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. Filter Vehicles by User
+            const userSelect = document.querySelector('select[name="userId"]');
+            const vehicleSelect = document.getElementById('vehicleSelect');
+            if (userSelect && vehicleSelect) {
+                const vehicleOptions = Array.from(vehicleSelect.options);
+ 
+                function filterVehicles() {
+                    const selectedUserId = userSelect.value;
+                    const currentValue = vehicleSelect.value;
+                    
+                    // Clear current options
+                    vehicleSelect.innerHTML = '<option value="">-- Select Vehicle --</option>';
+                    
+                    // Filter and add matching options
+                    vehicleOptions.forEach(opt => {
+                        const optUserId = opt.getAttribute('data-user-id');
+                        if (opt.value === "" || optUserId === selectedUserId) {
+                            vehicleSelect.appendChild(opt);
+                        }
+                    });
+                    
+                    // Restore value if it exists in the filtered options
+                    if (currentValue) {
+                        vehicleSelect.value = currentValue;
+                    }
+                }
+ 
+                userSelect.addEventListener('change', filterVehicles);
+                // Trigger initial filter in case a user is pre-selected
+                filterVehicles();
+            }
+
+            // 2. Fetch Active Bookings on Slot Change
+            const slotSelect = document.querySelector('select[name="slotId"]');
+            const bookingsContainer = document.getElementById('slotBookingsContainer');
+            const bookingsList = document.getElementById('slotBookingsList');
+
+            if (slotSelect && bookingsContainer && bookingsList) {
+                function fetchSlotBookings() {
+                    const slotId = slotSelect.value;
+                    if (!slotId) {
+                        bookingsContainer.style.display = 'none';
+                        return;
+                    }
+
+                    fetch('/ui/reservations/active-bookings?slotId=' + slotId)
+                        .then(response => response.json())
+                        .then(data => {
+                            bookingsList.innerHTML = '';
+                            if (data && data.length > 0) {
+                                data.forEach(booking => {
+                                    const li = document.createElement('li');
+                                    // Format start and end times nicely
+                                    const start = new Date(booking.startTime).toLocaleString('en-GB', {
+                                        year: 'numeric', month: '2-digit', day: '2-digit',
+                                        hour: '2-digit', minute: '2-digit', hour12: false
+                                    }).replace(',', '');
+                                    const end = new Date(booking.endTime).toLocaleString('en-GB', {
+                                        year: 'numeric', month: '2-digit', day: '2-digit',
+                                        hour: '2-digit', minute: '2-digit', hour12: false
+                                    }).replace(',', '');
+                                    li.textContent = start + ' to ' + end;
+                                    bookingsList.appendChild(li);
+                                });
+                                bookingsContainer.style.display = 'block';
+                            } else {
+                                bookingsContainer.style.display = 'none';
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Error fetching bookings:', err);
+                        });
+                }
+
+                slotSelect.addEventListener('change', fetchSlotBookings);
+                // Trigger initial load if a slot is pre-selected (e.g. on edit)
+                fetchSlotBookings();
+            }
+        });
+    </script>
+</body>
+</html>

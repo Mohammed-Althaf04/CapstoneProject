@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Smart Parking Dashboard</title>
+</head>
+<body>
+    <div th:replace="layout/navbar :: navbar"></div>
+ 
+    <div class="container">
+        <!-- Welcome Header -->
+        <div style="margin-bottom: 30px;">
+            <h1 style="font-size: 28px; margin-bottom: 8px;" th:if="${isAdmin}">Welcome, <span th:text="${currentUser != null ? currentUser.name : 'Admin'}">Admin</span> 👨‍💼</h1>
+            <h1 style="font-size: 28px; margin-bottom: 8px;" th:if="${!isAdmin}">Welcome, <span th:text="${currentUser != null ? currentUser.name : 'Customer'}">Customer</span> 🚗</h1>
+            
+            <p style="color: var(--text-muted); font-size: 15px;" th:if="${isAdmin}">Monitor and manage all system configurations, users, slots, reservations, and billing.</p>
+            <p style="color: var(--text-muted); font-size: 15px;" th:if="${!isAdmin}">Manage your registered vehicles, request slots in advance, and pay your active parking invoices.</p>
+        </div>
+
+        <!-- Creative Stats Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 35px;">
+            <div style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 20px -5px rgba(37,99,235,0.3); border: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; font-weight: 700;" th:text="${isAdmin ? 'Total Parking Slots' : 'Available Slots'}">Slots</div>
+                <div style="font-size: 32px; font-weight: 800; margin-top: 8px; font-family: 'Outfit';" th:text="${totalSlots}">0</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 20px -5px rgba(16,185,129,0.3); border: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; font-weight: 700;" th:text="${isAdmin ? 'Total Vehicles' : 'My Vehicles'}">Vehicles</div>
+                <div style="font-size: 32px; font-weight: 800; margin-top: 8px; font-family: 'Outfit';" th:text="${totalVehicles}">0</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 20px -5px rgba(245,158,11,0.3); border: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; font-weight: 700;" th:text="${isAdmin ? 'Total Reservations' : 'My Reservations'}">Reservations</div>
+                <div style="font-size: 32px; font-weight: 800; margin-top: 8px; font-family: 'Outfit';" th:text="${totalReservations}">0</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 20px -5px rgba(139,92,246,0.3); border: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; font-weight: 700;" th:text="${isAdmin ? 'Total Revenue Collected' : 'My Total Spent'}">Revenue</div>
+                <div style="font-size: 32px; font-weight: 800; margin-top: 8px; font-family: 'Outfit';" th:text="'$' + ${#numbers.formatDecimal(totalRevenue, 1, 'COMMA', 2, 'POINT')}">0</div>
+            </div>
+        </div>
+ 
+        <div class="dashboard-grid">
+            <!-- Users Card -->
+            <div class="dashboard-widget" onclick="window.location.href='/ui/users'" th:if="${isAdmin}">
+                <div class="widget-icon">👥</div>
+                <div class="widget-title">Users</div>
+                <div class="widget-desc">Manage system users, customer roles, and access settings.</div>
+            </div>
+ 
+            <!-- Vehicles Card -->
+            <div class="dashboard-widget" onclick="window.location.href='/ui/vehicles'">
+                <div class="widget-icon">🚘</div>
+                <div class="widget-title">Vehicles</div>
+                <div class="widget-desc" th:if="${isAdmin}">Register and track vehicle types, owners, and plates.</div>
+                <div class="widget-desc" th:if="${!isAdmin}">View and register your personal vehicles.</div>
+            </div>
+ 
+            <!-- Slots Card -->
+            <div class="dashboard-widget" onclick="window.location.href='/ui/slots'">
+                <div class="widget-icon">🅿️</div>
+                <div class="widget-title">Parking Slots</div>
+                <div class="widget-desc" th:if="${isAdmin}">Configure layout floors, slot availability, and slot types.</div>
+                <div class="widget-desc" th:if="${!isAdmin}">Check parking slot layouts and availability.</div>
+            </div>
+ 
+            <!-- Records Card -->
+            <div class="dashboard-widget" onclick="window.location.href='/ui/records'" th:if="${isAdmin}">
+                <div class="widget-icon">📝</div>
+                <div class="widget-title">Parking Records</div>
+                <div class="widget-desc">Track check-ins, check-outs, and live parked durations.</div>
+            </div>
+ 
+            <!-- Reservations Card -->
+            <div class="dashboard-widget" onclick="window.location.href='/ui/reservations'">
+                <div class="widget-icon">📅</div>
+                <div class="widget-title">Reservations</div>
+                <div class="widget-desc" th:if="${isAdmin}">Book and monitor slots in advance for registered users.</div>
+                <div class="widget-desc" th:if="${!isAdmin}">Book a slot in advance and manage your reservations.</div>
+            </div>
+ 
+            <!-- Billing Card -->
+            <div class="dashboard-widget" onclick="window.location.href='/ui/billing'">
+                <div class="widget-icon">💰</div>
+                <div class="widget-title">Billing Records</div>
+                <div class="widget-desc" th:if="${isAdmin}">Generate invoices, collect payments, and view transaction IDs.</div>
+                <div class="widget-desc" th:if="${!isAdmin}">View and pay your parking bills online.</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

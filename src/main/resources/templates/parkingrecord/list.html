@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Parking Records</title>
+</head>
+
+<body>
+<div th:replace="layout/navbar :: navbar"></div>
+
+<div class="container">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">📝 Parking Records</h2>
+        <div>
+            <a href="/ui/records/new" class="btn btn-primary">➕ New Parking Entry</a>
+            <a href="/ui/home" class="btn btn-secondary">🏠 Dashboard</a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Vehicle Number</th>
+                <th>Slot Number</th>
+                <th>Entry Time</th>
+                <th>Exit Time</th>
+                <th>Duration</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="r : ${records}">
+            
+                <td th:text="${r.recordId}"></td>
+                <td th:text="${r.vehicle.vehicleNumber}" style="font-family: monospace; font-weight: bold; font-size: 15px;"></td>
+                <td th:text="${r.parkingSlot.slotNumber}" style="font-weight: bold;"></td>
+                <td th:text="${r.entryTime}"></td>
+                <td>
+                    <span th:if="${r.exitTime == null}" class="badge badge-warning">🚘 Active Parked</span>
+                    <span th:if="${r.exitTime != null}" th:text="${r.exitTime}"></span>
+                </td>
+                <td th:text="${r.duration != null ? r.duration : 0}"></td>
+                <td>
+                    <span th:if="${r.exitTime == null}">
+                        <a class="btn btn-success"
+                           th:href="@{'/ui/records/exit/' + ${r.recordId}}"
+                           style="padding: 6px 12px; font-size: 12.5px;">
+                            Exit
+                        </a>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

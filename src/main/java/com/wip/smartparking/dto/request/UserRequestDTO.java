@@ -29,6 +29,20 @@ public class UserRequestDTO {
 
     @NotNull(message = "User role is required")
     private UserRole role;
+    
+	public UserRequestDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public UserRequestDTO(String name,String email,String phone,String password,UserRole role) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.password = password;
+		this.role = role;
+	}
 
 	public String getName() {
 		return name;
@@ -69,6 +83,11 @@ public class UserRequestDTO {
 	public void setRole(UserRole role) {
 		this.role = role;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "UserRequestDTO [name=" + name + ", email=" + email + ", phone=" + phone + ", password=" + password
+				+ ", role=" + role + "]";
+	}
     
 }

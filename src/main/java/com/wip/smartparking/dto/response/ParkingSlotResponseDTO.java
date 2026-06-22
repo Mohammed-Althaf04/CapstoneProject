@@ -6,14 +6,25 @@ import com.wip.smartparking.enums.SlotType;
 public class ParkingSlotResponseDTO {
 
     private Long slotId;
-
     private String slotNumber;
-
     private SlotType slotType;
-
     private Integer floorNo;
-
     private SlotStatus status;
+    
+	public ParkingSlotResponseDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ParkingSlotResponseDTO(Long slotId, String slotNumber, SlotType slotType, Integer floorNo,
+			SlotStatus status) {
+		super();
+		this.slotId = slotId;
+		this.slotNumber = slotNumber;
+		this.slotType = slotType;
+		this.floorNo = floorNo;
+		this.status = status;
+	}
 
 	public Long getSlotId() {
 		return slotId;
@@ -55,6 +66,10 @@ public class ParkingSlotResponseDTO {
 		this.status = status;
 	}
 
-    // Generate Getters & Setters
+	@Override
+	public String toString() {
+		return "ParkingSlotResponseDTO [slotId=" + slotId + ", slotNumber=" + slotNumber + ", slotType=" + slotType
+				+ ", floorNo=" + floorNo + ", status=" + status + "]";
+	}
     
 }

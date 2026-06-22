@@ -23,30 +23,24 @@ public class BillingController {
     @Autowired
     private BillingService billingService;
 
-    @PostMapping
-    public BillingResponseDTO saveBill(
-            @Valid @RequestBody BillingRequestDTO dto) {
+    // GENERATE BILL (NOT SAVE DIRECTLY)
+    @PostMapping("/generate/{recordId}")
+    public BillingResponseDTO generateBill(@PathVariable Long recordId) {
 
-        Billing bill =
-                BillingMapper.toEntity(dto);
-
-        Billing savedBill =
-                billingService.saveBill(bill);
-
-        return BillingMapper.toResponseDTO(savedBill);
-    }
-
-    @GetMapping("/{id}")
-    public BillingResponseDTO getBillById(
-            @PathVariable Long id) {
-
-        Billing bill =
-                billingService.getBillById(id);
+        Billing bill = billingService.generateBill(recordId);
 
         return BillingMapper.toResponseDTO(bill);
     }
 
-    @GetMapping
+    @GetMapping("getABill/{id}")
+    public BillingResponseDTO getBillById(@PathVariable Long id) {
+
+        Billing bill = billingService.getBillById(id);
+
+        return BillingMapper.toResponseDTO(bill);
+    }
+
+    @GetMapping("listAll")
     public List<BillingResponseDTO> getAllBills() {
 
         return billingService.getAllBills()
@@ -55,12 +49,10 @@ public class BillingController {
                 .collect(Collectors.toList());
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteBill(
-            @PathVariable Long id) {
+    @DeleteMapping("delete/{id}")
+    public String deleteBill(@PathVariable Long id) {
 
         billingService.deleteBill(id);
-
         return "Bill deleted successfully";
     }
 }

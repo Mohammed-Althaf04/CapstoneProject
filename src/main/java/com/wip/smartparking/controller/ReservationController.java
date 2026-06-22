@@ -21,37 +21,36 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping
-    public ReservationResponseDTO saveReservation(
-            @Valid @RequestBody ReservationRequestDTO dto) {
+    public ReservationResponseDTO saveReservation(@Valid @RequestBody ReservationRequestDTO dto) {
 
         Reservation reservation = ReservationMapper.toEntity(dto);
 
         Reservation savedReservation =
-                reservationService.saveReservation(reservation);
+                reservationService.saveReservation(reservation,dto.getUserId(),dto.getSlotId());
 
         return ReservationMapper.toResponseDTO(savedReservation);
     }
 
-    @GetMapping("/{id}")
-    public ReservationResponseDTO getReservationById(
-            @PathVariable Long id) {
+    @GetMapping("getAReservation/{id}")
+    public ReservationResponseDTO getReservationById(@PathVariable Long id) {
 
-        Reservation reservation =
-                reservationService.getReservationById(id);
+        Reservation reservation =reservationService.getReservationById(id);
 
         return ReservationMapper.toResponseDTO(reservation);
     }
 
-    @GetMapping
+    @GetMapping("listAll")
     public List<Reservation> getAllReservations() {
         return reservationService.getAllReservations();
     }
-
-    @DeleteMapping("/{id}")
+    
+    @DeleteMapping("delete/{id}")
     public String deleteReservation(@PathVariable Long id) {
 
         reservationService.deleteReservation(id);
 
         return "Reservation deleted successfully";
     }
+
+    
 }

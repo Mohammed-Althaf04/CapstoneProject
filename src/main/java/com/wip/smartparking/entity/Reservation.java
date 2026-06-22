@@ -15,9 +15,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reservationId;
-
     private LocalDateTime startTime;
-
     private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
@@ -34,6 +32,23 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "slot_id")
     private ParkingSlot parkingSlot;
+    
+	public Reservation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Reservation(Long reservationId, LocalDateTime startTime, LocalDateTime endTime, ReservationStatus status,
+			User user, Vehicle vehicle, ParkingSlot parkingSlot) {
+		super();
+		this.reservationId = reservationId;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.status = status;
+		this.user = user;
+		this.vehicle = vehicle;
+		this.parkingSlot = parkingSlot;
+	}
 
 	public Long getReservationId() {
 		return reservationId;
@@ -90,6 +105,11 @@ public class Reservation {
 	public void setParkingSlot(ParkingSlot parkingSlot) {
 		this.parkingSlot = parkingSlot;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "Reservation [reservationId=" + reservationId + ", startTime=" + startTime + ", endTime=" + endTime + ", status=" + status + ", user=" + user + ", vehicle=" + vehicle + ", parkingSlot=" + parkingSlot
+				+ "]";
+	}
     
 }

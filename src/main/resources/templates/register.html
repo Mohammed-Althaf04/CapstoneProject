@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Customer Registration | Smart Parking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .register-card {
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        .register-card input {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border: 1.5px solid #cbd5e1 !important;
+            font-size: 14.5px !important;
+        }
+        .register-card input::placeholder {
+            color: #94a3b8 !important;
+        }
+        .register-card input:focus {
+            border-color: #2563eb !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+            outline: none !important;
+        }
+    </style>
+</head>
+<body class="login-container" style="min-height: 100vh; padding: 40px 20px;">
+ 
+<div class="register-card">
+    <div style="text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 56px; margin-bottom: 10px; animation: bounce 2s infinite;">🚗</div>
+        <h2 style="border-bottom: none; padding-bottom: 0; margin-bottom: 8px; justify-content: center; font-size: 26px; font-weight: 800;">Register Account</h2>
+        <p style="color: var(--text-muted); font-size: 14.5px;">Create a customer account to check slots and reserve parking</p>
+    </div>
+ 
+    <form action="/register" method="post" th:object="${user}">
+        <input type="hidden" name="role" value="USER" />
+        <!-- Validation Summary Alert Box -->
+        <div th:if="${#fields.hasErrors('*')}" style="background-color: #fee2e2; color: #991b1b; padding: 14px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-bottom: 20px; text-align: left; border: 1px solid rgba(239, 68, 68, 0.2);">
+            <strong style="display: block; margin-bottom: 6px;">⚠️ Please correct the following errors:</strong>
+            <ul style="margin: 0; padding-left: 20px; font-size: 12.5px; font-weight: 500; line-height: 1.5;">
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+            </ul>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+            <label style="font-weight: 600; font-size: 13px;">Full Name</label>
+            <input type="text" th:field="*{name}" placeholder="Enter your full name" required style="padding: 12px 14px; border-radius: 8px; background-color: #ffffff !important; color: #0f172a !important;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+            <label style="font-weight: 600; font-size: 13px;">Email Address</label>
+            <input type="email" th:field="*{email}" placeholder="Enter your email address" required style="padding: 12px 14px; border-radius: 8px; background-color: #ffffff !important; color: #0f172a !important;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+            <label style="font-weight: 600; font-size: 13px;">Phone Number</label>
+            <input type="text" th:field="*{phone}" placeholder="Enter 10-digit mobile number" required pattern="[0-9]{10}" title="Phone number must contain exactly 10 digits" style="padding: 12px 14px; border-radius: 8px; background-color: #ffffff !important; color: #0f172a !important;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+            <label style="font-weight: 600; font-size: 13px;">Password</label>
+            <input type="password" th:field="*{password}" placeholder="Create password (min 6 characters)" required minlength="6" style="padding: 12px 14px; border-radius: 8px; background-color: #ffffff !important; color: #0f172a !important;">
+        </div>
+ 
+        <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 15px; padding: 12px 20px; border-radius: 8px; font-weight: 700; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);">
+            Register &amp; Login
+        </button>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 14px; color: var(--text-muted);">
+            Already have an account? <a href="/login" style="color: var(--primary); font-weight: 600; text-decoration: none;">Sign In</a>
+        </div>
+    </form>
+</div>
+ 
+</body>
+</html>

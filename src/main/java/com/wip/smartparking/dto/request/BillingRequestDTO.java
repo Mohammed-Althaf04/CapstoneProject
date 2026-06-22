@@ -20,7 +20,20 @@ public class BillingRequestDTO {
     @NotNull(message = "Billing status is required")
     private BillingStatus billingStatus;
 
-    public Double getAmount() {
+    public BillingRequestDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public BillingRequestDTO(Double amount, Double tax, Double totalAmount, BillingStatus billingStatus) {
+		super();
+		this.amount = amount;
+		this.tax = tax;
+		this.totalAmount = totalAmount;
+		this.billingStatus = billingStatus;
+	}
+
+	public Double getAmount() {
         return amount;
     }
 
@@ -51,4 +64,12 @@ public class BillingRequestDTO {
     public void setBillingStatus(BillingStatus billingStatus) {
         this.billingStatus = billingStatus;
     }
+
+	@Override
+	public String toString() {
+		return "BillingRequestDTO [amount=" + amount + ", tax=" + tax + ", totalAmount=" + totalAmount
+				+ ", billingStatus=" + billingStatus + "]";
+	}
+    
+    
 }

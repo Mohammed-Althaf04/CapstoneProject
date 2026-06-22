@@ -22,6 +22,19 @@ public class ParkingSlotRequestDTO {
     @NotNull(message = "Slot status is required")
     private SlotStatus status;
 
+	public ParkingSlotRequestDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ParkingSlotRequestDTO(String slotNumber,SlotType slotType,Integer floorNo,SlotStatus status) {
+		super();
+		this.slotNumber = slotNumber;
+		this.slotType = slotType;
+		this.floorNo = floorNo;
+		this.status = status;
+	}
+
 	public String getSlotNumber() {
 		return slotNumber;
 	}
@@ -53,6 +66,11 @@ public class ParkingSlotRequestDTO {
 	public void setStatus(SlotStatus status) {
 		this.status = status;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "ParkingSlotRequestDTO [slotNumber=" + slotNumber + ", slotType=" + slotType + ", floorNo=" + floorNo
+				+ ", status=" + status + "]";
+	}
     
 }

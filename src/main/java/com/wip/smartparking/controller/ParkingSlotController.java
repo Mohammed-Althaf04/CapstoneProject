@@ -21,8 +21,7 @@ public class ParkingSlotController {
     private ParkingSlotService parkingSlotService;
 
     @PostMapping
-    public ParkingSlotResponseDTO saveSlot(
-            @Valid @RequestBody ParkingSlotRequestDTO dto) {
+    public ParkingSlotResponseDTO saveSlot(@Valid @RequestBody ParkingSlotRequestDTO dto) {
 
         ParkingSlot slot = ParkingSlotMapper.toEntity(dto);
 
@@ -31,7 +30,7 @@ public class ParkingSlotController {
         return ParkingSlotMapper.toResponseDTO(savedSlot);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("getASlot/{id}")
     public ParkingSlotResponseDTO getSlotById(@PathVariable Long id) {
 
         ParkingSlot slot = parkingSlotService.getSlotById(id);
@@ -39,12 +38,12 @@ public class ParkingSlotController {
         return ParkingSlotMapper.toResponseDTO(slot);
     }
 
-    @GetMapping
+    @GetMapping("/listAll")
     public List<ParkingSlot> getAllSlots() {
         return parkingSlotService.getAllSlots();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public String deleteSlot(@PathVariable Long id) {
 
         parkingSlotService.deleteSlot(id);

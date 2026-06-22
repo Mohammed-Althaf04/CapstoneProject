@@ -6,11 +6,9 @@ import com.wip.smartparking.entity.Billing;
 
 public interface BillingService {
 
-    Billing saveBill(Billing bill);
-
+    Billing generateBill(Long recordId);
     Billing getBillById(Long id);
-
     List<Billing> getAllBills();
-
     void deleteBill(Long id);
+    Billing saveBill(Billing bill);
 }

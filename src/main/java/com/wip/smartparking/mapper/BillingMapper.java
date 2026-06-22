@@ -27,6 +27,9 @@ public class BillingMapper {
         dto.setTax(billing.getTax());
         dto.setTotalAmount(billing.getTotalAmount());
         dto.setBillingStatus(billing.getBillingStatus());
+        dto.setRazorpayOrderId(billing.getRazorpayOrderId());
+        dto.setRazorpayPaymentId(billing.getRazorpayPaymentId());
+        dto.setRazorpaySignature(billing.getRazorpaySignature());
 
         return dto;
     }

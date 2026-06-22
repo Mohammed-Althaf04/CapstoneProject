@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${vehicle.vehicleId != null ? 'Edit Vehicle' : 'Add Vehicle'}">Add Vehicle</title>
+</head>
+<body>
+<div th:replace="layout/navbar :: navbar"></div>
+ 
+<div class="container">
+    <div class="card form-card">
+        <h2 th:text="${vehicle.vehicleId != null ? '🚘 Edit Vehicle' : '🚘 Add Vehicle'}">🚘 Add Vehicle</h2>
+ 
+        <form action="/ui/vehicles/save" method="post" th:object="${vehicle}">
+            <input type="hidden" th:field="*{vehicleId}" />
+            <!-- Validation Summary Alert Box -->
+            <div th:if="${#fields.hasErrors('*')}" style="background-color: #fee2e2; color: #991b1b; padding: 14px 18px; border-radius: 8px; font-size: 13.5px; font-weight: 600; margin-bottom: 20px; text-align: left; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <strong style="display: block; margin-bottom: 6px;">⚠️ Please correct the following errors:</strong>
+                <ul style="margin: 0; padding-left: 20px; font-size: 13px; font-weight: 500; line-height: 1.5;">
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Vehicle Number</label>
+                    <input type="text" th:field="*{vehicleNumber}" placeholder="e.g. MH-12-AB-1234" required />
+                    <div th:if="${#fields.hasErrors('vehicleNumber')}" th:errors="*{vehicleNumber}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                </div>
+ 
+                <div class="form-group">
+                    <label>Vehicle Type</label>
+                    <select th:field="*{vehicleType}" required>
+                        <option value="">-- Select Vehicle Type --</option>
+                        <option value="CAR">Car</option>
+                        <option value="BIKE">Bike</option>
+                        <option value="EV">Electric Vehicle (EV)</option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('vehicleType')}" th:errors="*{vehicleType}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                </div>
+ 
+                <!-- Admin Owner Dropdown -->
+                <div class="form-group" th:if="${!isCustomer}">
+                    <label>Select Owner / User</label>
+                    <select name="userId" required>
+                        <option value="">-- Select Owner --</option>
+                        <option th:each="u : ${users}"
+                                th:value="${u.userId}"
+                                th:selected="${u.userId == vehicle.userId}"
+                                th:text="${u.userId + ' - ' + u.name}">
+                        </option>
+                    </select>
+                </div>
+ 
+                <!-- Customer Read-Only Display -->
+                <div class="form-group" th:if="${isCustomer}">
+                    <label>Owner / User</label>
+                    <input type="text" th:value="${currentUser != null ? currentUser.name : 'Current User'}" readonly style="background-color: #e2e8f0; cursor: not-allowed;" />
+                    <input type="hidden" name="userId" th:value="${vehicle.userId}" />
+                </div>
+            </div>
+ 
+            <div class="form-actions">
+                <a href="/ui/vehicles" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save Vehicle</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

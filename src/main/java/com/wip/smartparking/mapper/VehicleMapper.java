@@ -9,7 +9,6 @@ public class VehicleMapper {
     public static Vehicle toEntity(VehicleRequestDTO dto) {
 
         Vehicle vehicle = new Vehicle();
-
         vehicle.setVehicleNumber(dto.getVehicleNumber());
         vehicle.setVehicleType(dto.getVehicleType());
 
@@ -19,7 +18,6 @@ public class VehicleMapper {
     public static VehicleResponseDTO toResponseDTO(Vehicle vehicle) {
 
         VehicleResponseDTO dto = new VehicleResponseDTO();
-
         dto.setVehicleId(vehicle.getVehicleId());
         dto.setVehicleNumber(vehicle.getVehicleNumber());
         dto.setVehicleType(vehicle.getVehicleType());

@@ -21,34 +21,26 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @PostMapping
-    public VehicleResponseDTO saveVehicle(
-            @Valid @RequestBody VehicleRequestDTO dto) {
-
+    public VehicleResponseDTO saveVehicle(@Valid @RequestBody VehicleRequestDTO dto) {
         Vehicle vehicle = VehicleMapper.toEntity(dto);
-
-        Vehicle savedVehicle = vehicleService.saveVehicle(vehicle);
-
+        Vehicle savedVehicle = vehicleService.saveVehicle(vehicle, dto.getUserId());
         return VehicleMapper.toResponseDTO(savedVehicle);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("getAVehicle/{id}")
     public VehicleResponseDTO getVehicleById(@PathVariable Long id) {
-
         Vehicle vehicle = vehicleService.getVehicleById(id);
-
         return VehicleMapper.toResponseDTO(vehicle);
     }
 
-    @GetMapping
+    @GetMapping("/listAll")
     public List<Vehicle> getAllVehicles() {
         return vehicleService.getAllVehicles();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public String deleteVehicle(@PathVariable Long id) {
-
         vehicleService.deleteVehicle(id);
-
         return "Vehicle deleted successfully";
     }
 }

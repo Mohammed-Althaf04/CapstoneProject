@@ -5,16 +5,40 @@ import com.wip.smartparking.enums.BillingStatus;
 public class BillingResponseDTO {
 
     private Long billId;
-
     private Double amount;
-
     private Double tax;
-
     private Double totalAmount;
-
     private BillingStatus billingStatus;
+    private String razorpayOrderId;
+    private String razorpayPaymentId;
+    private String razorpaySignature;
 
-    public Long getBillId() {
+    public BillingResponseDTO() {
+		super();
+	}
+    
+	public BillingResponseDTO(Long billId, Double amount, Double tax, Double totalAmount, BillingStatus billingStatus) {
+		super();
+		this.billId = billId;
+		this.amount = amount;
+		this.tax = tax;
+		this.totalAmount = totalAmount;
+		this.billingStatus = billingStatus;
+	}
+	
+	public BillingResponseDTO(Long billId, Double amount, Double tax, Double totalAmount, BillingStatus billingStatus, String razorpayOrderId, String razorpayPaymentId, String razorpaySignature) {
+		super();
+		this.billId = billId;
+		this.amount = amount;
+		this.tax = tax;
+		this.totalAmount = totalAmount;
+		this.billingStatus = billingStatus;
+		this.razorpayOrderId = razorpayOrderId;
+		this.razorpayPaymentId = razorpayPaymentId;
+		this.razorpaySignature = razorpaySignature;
+	}
+	
+	public Long getBillId() {
         return billId;
     }
 
@@ -53,4 +77,36 @@ public class BillingResponseDTO {
     public void setBillingStatus(BillingStatus billingStatus) {
         this.billingStatus = billingStatus;
     }
+
+	public String getRazorpayOrderId() {
+		return razorpayOrderId;
+	}
+
+	public void setRazorpayOrderId(String razorpayOrderId) {
+		this.razorpayOrderId = razorpayOrderId;
+	}
+
+	public String getRazorpayPaymentId() {
+		return razorpayPaymentId;
+	}
+
+	public void setRazorpayPaymentId(String razorpayPaymentId) {
+		this.razorpayPaymentId = razorpayPaymentId;
+	}
+
+	public String getRazorpaySignature() {
+		return razorpaySignature;
+	}
+
+	public void setRazorpaySignature(String razorpaySignature) {
+		this.razorpaySignature = razorpaySignature;
+	}
+
+	@Override
+	public String toString() {
+		return "BillingResponseDTO [billId=" + billId + ", amount=" + amount + ", tax=" + tax + ", totalAmount="
+				+ totalAmount + ", billingStatus=" + billingStatus + ", razorpayOrderId=" + razorpayOrderId
+				+ ", razorpayPaymentId=" + razorpayPaymentId + ", razorpaySignature=" + razorpaySignature + "]";
+	}
+    
 }

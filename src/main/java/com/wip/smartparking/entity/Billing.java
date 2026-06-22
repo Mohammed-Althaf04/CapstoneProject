@@ -6,25 +6,40 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "billing")
 public class Billing {
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long billId;
 
     private Double amount;
-
     private Double tax;
-
     private Double totalAmount;
 
     @Enumerated(EnumType.STRING)
     private BillingStatus billingStatus;
 
-    @OneToOne
-    @JoinColumn(name = "record_id")
+    @OneToOne(optional = false)
+    @JoinColumn(name = "record_id", nullable = false, unique = true)
     private ParkingRecord parkingRecord;
 
-    public Long getBillId() {
+    private String razorpayOrderId;
+    private String razorpayPaymentId;
+    private String razorpaySignature;
+
+    public Billing() {}
+
+    public Billing(Long billId, Double amount, Double tax,
+                   Double totalAmount, BillingStatus billingStatus,
+                   ParkingRecord parkingRecord) {
+        this.billId = billId;
+        this.amount = amount;
+        this.tax = tax;
+        this.totalAmount = totalAmount;
+        this.billingStatus = billingStatus;
+        this.parkingRecord = parkingRecord;
+    }
+
+	public Long getBillId() {
 		return billId;
 	}
 
@@ -72,5 +87,27 @@ public class Billing {
 		this.parkingRecord = parkingRecord;
 	}
 
-	
+	public String getRazorpayOrderId() {
+		return razorpayOrderId;
+	}
+
+	public void setRazorpayOrderId(String razorpayOrderId) {
+		this.razorpayOrderId = razorpayOrderId;
+	}
+
+	public String getRazorpayPaymentId() {
+		return razorpayPaymentId;
+	}
+
+	public void setRazorpayPaymentId(String razorpayPaymentId) {
+		this.razorpayPaymentId = razorpayPaymentId;
+	}
+
+	public String getRazorpaySignature() {
+		return razorpaySignature;
+	}
+
+	public void setRazorpaySignature(String razorpaySignature) {
+		this.razorpaySignature = razorpaySignature;
+	}
 }

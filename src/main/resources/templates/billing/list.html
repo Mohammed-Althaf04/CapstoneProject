@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Billing Records</title>
+</head>
+
+<body>
+
+    <div th:replace="layout/navbar :: navbar"></div>
+
+    <div class="container">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h2 style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">💰 Billing Records</h2>
+            <a href="/ui/home" class="btn btn-secondary">🏠 Dashboard</a>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Bill ID</th>
+                        <th>Vehicle</th>
+                        <th>Amount</th>
+                        <th>Duration</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="b : ${bills}">
+
+                        <td th:text="${b.billId}"></td>
+                        <td th:text="${b.parkingRecord.vehicle.vehicleNumber}"></td>
+                        <td th:text="${b.amount}"></td>
+                        <td th:text="${b.parkingRecord.duration}"></td>
+                        <td th:text="${b.totalAmount}"></td>
+                        <td>
+                            <span th:class="'badge badge-' + ${b.billingStatus}" th:text="${b.billingStatus}"></span>
+                        </td>
+                    <td>
+                        <span th:if="${b.billingStatus.name() == 'PENDING'}">
+                            <!-- Show Pay button only to customers -->
+                            <button th:if="${!isAdmin}" class="btn-pay" th:onclick="'initiatePayment(' + ${b.billId} + ', ' + ${b.totalAmount} + ')'" style="cursor: pointer; border: none; font-size: 14px; font-weight: 600;">
+                                Pay
+                            </button>
+                            <!-- Show text/dash to Admin -->
+                            <span th:if="${isAdmin}" style="color: #64748b; font-size: 13.5px; font-weight: 500;">
+                                Awaiting Payment
+                            </span>
+                        </span>
+
+                        <span th:if="${b.billingStatus.name() == 'PAID'}">
+                            <span style="color: green; font-weight: bold;">✅ Paid</span><br/>
+                            <small style="color: #555; font-size: 11px;" th:if="${b.razorpayPaymentId != null}">
+                                ID: <span th:text="${b.razorpayPaymentId}"></span>
+                            </small>
+                        </span>
+                    </td>
+
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- Mock Razorpay Checkout Simulation Code -->
+    <script>
+        // Custom simulated Razorpay widget that mimics the checkout modal behavior
+        class MockRazorpay {
+            constructor(options) {
+                this.options = options;
+            }
+            
+            open() {
+                const modalId = 'rzp-mock-checkout-modal';
+                let modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.remove();
+                }
+                
+                modal = document.createElement('div');
+                modal.id = modalId;
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.65)';
+                modal.style.zIndex = '9999';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.fontFamily = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                
+                const amountDisplay = (this.options.amount / 100).toFixed(2);
+                
+                modal.innerHTML = `
+                    <div style="background: #ffffff; width: 380px; border-radius: 12px; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.3); cubic-bezier(0.16, 1, 0.3, 1); animation: rzpFadeIn 0.3s ease;">
+                        <!-- Header -->
+                        <div style="background: #0b1c3a; color: #ffffff; padding: 22px 20px; text-align: center; position: relative;">
+                            <div style="font-weight: 700; font-size: 19px; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <span style="color: #3399FF; font-size: 22px; font-weight: 900;">razorpay</span>
+                                <span style="background: #1c2e4e; font-size: 10px; padding: 2px 6px; border-radius: 4px; color: #3399FF; font-weight: 600; text-transform: uppercase;">Test Mode</span>
+                            </div>
+                            <div style="font-size: 12px; color: #8fa0bd; margin-top: 4px;">Smart Parking System Payments</div>
+                            <div style="margin-top: 15px; font-size: 26px; font-weight: 700; color: #ffffff;">₹ ${amountDisplay}</div>
+                        </div>
+                        
+                        <!-- Main Card Payment Screen -->
+                        <div style="padding: 24px 20px;" id="rzp-card-screen">
+                            <div style="font-weight: 600; font-size: 12px; color: #7f8c9d; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.8px;">Pay with Card</div>
+                            
+                            <div style="margin-bottom: 16px;">
+                                <label style="display: block; font-size: 12px; color: #34495e; margin-bottom: 6px; font-weight: 500;">Card Number</label>
+                                <input type="text" id="rzp-card-number" placeholder="4111 1111 1111 1111" maxlength="19" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #dcdfe6; border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.2s;" oninput="formatCardNumber(this)"/>
+                            </div>
+                            
+                            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                                <div style="flex: 1;">
+                                    <label style="display: block; font-size: 12px; color: #34495e; margin-bottom: 6px; font-weight: 500;">Expiry Date</label>
+                                    <input type="text" id="rzp-card-expiry" placeholder="MM/YY" maxlength="5" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #dcdfe6; border-radius: 6px; font-size: 14px; outline: none;" oninput="formatExpiry(this)"/>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label style="display: block; font-size: 12px; color: #34495e; margin-bottom: 6px; font-weight: 500;">CVV</label>
+                                    <input type="password" id="rzp-card-cvv" placeholder="123" maxlength="3" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #dcdfe6; border-radius: 6px; font-size: 14px; outline: none;"/>
+                                </div>
+                            </div>
+                            
+                            <div id="rzp-card-error" style="color: #e74c3c; font-size: 12px; margin-bottom: 15px; display: none;"></div>
+                            
+                            <button onclick="submitRzpCardPayment()" style="width: 100%; background: #3399FF; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s;">
+                                Pay ₹ ${amountDisplay}
+                            </button>
+                            
+                            <div style="text-align: center; margin-top: 18px;">
+                                <a href="javascript:void(0)" onclick="toggleRzpScreen('upi')" style="color: #3399FF; font-size: 13px; text-decoration: none; font-weight: 500;">Or pay via UPI ID</a>
+                            </div>
+                        </div>
+
+                        <!-- UPI Payment Screen -->
+                        <div style="padding: 24px 20px; display: none;" id="rzp-upi-screen">
+                            <div style="font-weight: 600; font-size: 12px; color: #7f8c9d; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.8px;">Pay with UPI</div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; font-size: 12px; color: #34495e; margin-bottom: 6px; font-weight: 500;">UPI ID / VPA</label>
+                                <input type="text" id="rzp-upi-id" placeholder="success@razorpay" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #dcdfe6; border-radius: 6px; font-size: 14px; outline: none;"/>
+                                <span style="font-size: 11px; color: #7f8c9d; display: block; margin-top: 6px;">Enter your virtual payment address (e.g. name@upi)</span>
+                            </div>
+                            
+                            <div id="rzp-upi-error" style="color: #e74c3c; font-size: 12px; margin-bottom: 15px; display: none;"></div>
+                            
+                            <button onclick="submitRzpUpiPayment()" style="width: 100%; background: #3399FF; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s;">
+                                Pay ₹ ${amountDisplay}
+                            </button>
+                            
+                            <div style="text-align: center; margin-top: 18px;">
+                                <a href="javascript:void(0)" onclick="toggleRzpScreen('card')" style="color: #3399FF; font-size: 13px; text-decoration: none; font-weight: 500;">Back to Card Payment</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Processing Screen -->
+                        <div style="padding: 50px 20px; display: none; text-align: center;" id="rzp-processing-screen">
+                            <div style="border: 4px solid #f3f3f3; border-top: 4px solid #3399FF; border-radius: 50%; width: 45px; height: 45px; animation: rzpSpin 1s linear infinite; margin: 0 auto 20px auto;"></div>
+                            <div style="font-weight: 600; font-size: 16px; color: #2c3e50;">Processing Transaction...</div>
+                            <div style="font-size: 12px; color: #7f8c9d; margin-top: 6px;">Please wait while we secure your payment</div>
+                        </div>
+
+                        <!-- Success Screen -->
+                        <div style="padding: 50px 20px; display: none; text-align: center;" id="rzp-success-screen">
+                            <div style="background: #2ecc71; color: #ffffff; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold; margin: 0 auto 20px auto; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);">✓</div>
+                            <div style="font-weight: 700; font-size: 19px; color: #2ecc71;">Payment Successful!</div>
+                            <div style="font-size: 12px; color: #7f8c9d; margin-top: 8px;" id="rzp-success-details"></div>
+                        </div>
+                        
+                        <!-- Footer -->
+                        <div style="background: #fcfdfe; padding: 16px 20px; border-top: 1px solid #eaedf1; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #7f8c9d;">
+                            <div style="display: flex; align-items: center; gap: 4px; font-weight: 500;">
+                                🛡️ SECURE 256-BIT SSL
+                            </div>
+                            <div style="font-weight: 600; letter-spacing: 0.2px;">Powered by Razorpay</div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Event handler setups
+                window.toggleRzpScreen = (screen) => {
+                    document.getElementById('rzp-card-screen').style.display = screen === 'card' ? 'block' : 'none';
+                    document.getElementById('rzp-upi-screen').style.display = screen === 'upi' ? 'block' : 'none';
+                };
+                
+                window.formatCardNumber = (input) => {
+                    let val = input.value.replace(/\D/g, '');
+                    let matches = val.match(/.{1,4}/g);
+                    input.value = matches ? matches.join(' ') : val;
+                };
+                
+                window.formatExpiry = (input) => {
+                    let val = input.value.replace(/\D/g, '');
+                    if (val.length > 2) {
+                        input.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+                    } else {
+                        input.value = val;
+                    }
+                };
+                
+                window.submitRzpCardPayment = () => {
+                    const cardNum = document.getElementById('rzp-card-number').value.replace(/\s+/g, '');
+                    const expiry = document.getElementById('rzp-card-expiry').value;
+                    const cvv = document.getElementById('rzp-card-cvv').value;
+                    const cardErr = document.getElementById('rzp-card-error');
+                    
+                    if (cardNum.length < 16) {
+                        cardErr.innerText = 'Card number must be 16 digits.';
+                        cardErr.style.display = 'block';
+                        return;
+                    }
+                    if (!expiry.includes('/') || expiry.length < 5) {
+                        cardErr.innerText = 'Expiry must be in MM/YY format.';
+                        cardErr.style.display = 'block';
+                        return;
+                    }
+                    if (cvv.length < 3) {
+                        cardErr.innerText = 'CVV must be 3 digits.';
+                        cardErr.style.display = 'block';
+                        return;
+                    }
+                    
+                    cardErr.style.display = 'none';
+                    this.executeMockPayment();
+                };
+                
+                window.submitRzpUpiPayment = () => {
+                    const upiId = document.getElementById('rzp-upi-id').value.trim();
+                    const upiErr = document.getElementById('rzp-upi-error');
+                    
+                    if (!upiId || !upiId.includes('@')) {
+                        upiErr.innerText = 'Please enter a valid UPI ID (e.g., user@bank).';
+                        upiErr.style.display = 'block';
+                        return;
+                    }
+                    
+                    upiErr.style.display = 'none';
+                    this.executeMockPayment();
+                };
+            }
+            
+            executeMockPayment() {
+                document.getElementById('rzp-card-screen').style.display = 'none';
+                document.getElementById('rzp-upi-screen').style.display = 'none';
+                document.getElementById('rzp-processing-screen').style.display = 'block';
+                
+                setTimeout(() => {
+                    const payId = 'pay_' + Math.random().toString(36).substring(2, 10).toUpperCase();
+                    const signature = 'sig_' + Math.random().toString(36).substring(2, 12).toUpperCase();
+                    
+                    document.getElementById('rzp-processing-screen').style.display = 'none';
+                    document.getElementById('rzp-success-details').innerText = 'Payment ID: ' + payId;
+                    document.getElementById('rzp-success-screen').style.display = 'block';
+                    
+                    setTimeout(() => {
+                        document.getElementById('rzp-mock-checkout-modal').remove();
+                        this.options.handler({
+                            razorpay_payment_id: payId,
+                            razorpay_order_id: this.options.order_id,
+                            razorpay_signature: signature
+                        });
+                    }, 1400);
+                }, 1600);
+            }
+        }
+
+        // Action when clicking "Pay" button
+        function initiatePayment(billId, totalAmount) {
+            // 1. Fetch a mock order ID from our backend
+            fetch('/api/payment/create-order/' + billId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (response.redirected || (response.url && response.url.includes('/login'))) {
+                    window.location.href = '/login';
+                    return;
+                }
+                if (!response.ok) {
+                    throw new Error('Failed to create order on server (Status: ' + response.status + ').');
+                }
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('Server returned HTML/non-JSON response. Please log in again.');
+                }
+                return response.json();
+            })
+            .then(orderData => {
+                if (!orderData) return; // redirected
+                // 2. Launch Mock Razorpay Checkout UI
+                var options = {
+                    "key": "rzp_test_mockkey",
+                    "amount": orderData.amount,
+                    "currency": orderData.currency,
+                    "name": "Smart Parking System",
+                    "description": "Transaction ID for Reservation #" + billId,
+                    "order_id": orderData.id,
+                    "handler": function (response) {
+                        // 3. Callback on success: send verification back to backend
+                        fetch('/api/payment/verify-payment', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            credentials: 'same-origin',
+                            body: JSON.stringify({
+                                razorpayOrderId: response.razorpay_order_id,
+                                razorpayPaymentId: response.razorpay_payment_id,
+                                razorpaySignature: response.razorpay_signature,
+                                billId: billId
+                            })
+                        })
+                        .then(res => {
+                            if (res.redirected || (res.url && res.url.includes('/login'))) {
+                                window.location.href = '/login';
+                                return;
+                            }
+                            if (!res.ok) {
+                                throw new Error('Transaction verification failed on server.');
+                            }
+                            const contentType = res.headers.get('content-type');
+                            if (!contentType || !contentType.includes('application/json')) {
+                                throw new Error('Server returned non-JSON verification response.');
+                            }
+                            return res.json();
+                        })
+                        .then(result => {
+                            if (!result) return;
+                            console.log('Payment verification succeeded:', result);
+                            window.location.reload();
+                        })
+                        .catch(err => {
+                            alert('Verification Error: ' + err.message);
+                        });
+                    }
+                };
+                
+                var rzp = new MockRazorpay(options);
+                rzp.open();
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Payment initiation failed: ' + error.message);
+            });
+        }
+    </script>
+
+    <style>
+        @keyframes rzpFadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes rzpSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .btn-pay {
+            background: #27ae60 !important;
+            box-shadow: 0 2px 4px rgba(39, 174, 96, 0.2);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-pay:hover {
+            background: #219653 !important;
+        }
+        .btn-pay:active {
+            transform: scale(0.97);
+        }
+    </style>
+</body>
+
+</html>

@@ -23,6 +23,19 @@ public class Vehicle {
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties("vehicles")
     private User user;
+    
+	public Vehicle() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Vehicle(Long vehicleId, String vehicleNumber, VehicleType vehicleType, User user) {
+		super();
+		this.vehicleId = vehicleId;
+		this.vehicleNumber = vehicleNumber;
+		this.vehicleType = vehicleType;
+		this.user = user;
+	}
 
 	public Long getVehicleId() {
 		return vehicleId;
@@ -55,6 +68,11 @@ public class Vehicle {
 	public void setUser(User user) {
 		this.user = user;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "Vehicle [vehicleId=" + vehicleId + ", vehicleNumber=" + vehicleNumber + ", vehicleType=" + vehicleType
+				+ ", user=" + user + "]";
+	}
     
 }

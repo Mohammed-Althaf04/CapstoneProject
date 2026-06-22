@@ -23,30 +23,33 @@ public class ParkingRecordController {
     @Autowired
     private ParkingRecordService parkingRecordService;
 
-    @PostMapping
-    public ParkingRecordResponseDTO saveParkingRecord(
-            @Valid @RequestBody ParkingRecordRequestDTO dto) {
+    @PostMapping("/entry")
+    public ParkingRecordResponseDTO saveParkingRecord(@Valid @RequestBody ParkingRecordRequestDTO dto) {
 
-        ParkingRecord record =
-                ParkingRecordMapper.toEntity(dto);
+        ParkingRecord record = ParkingRecordMapper.toEntity(dto);
 
-        ParkingRecord savedRecord =
-                parkingRecordService.saveRecord(record);
+        ParkingRecord savedRecord =parkingRecordService.createEntry(record,dto.getVehicleId(),dto.getSlotId());
 
         return ParkingRecordMapper.toResponseDTO(savedRecord);
     }
 
-    @GetMapping("/{id}")
-    public ParkingRecordResponseDTO getParkingRecordById(
-            @PathVariable Long id) {
+    @PutMapping("/exit/{recordId}")
+    public ParkingRecordResponseDTO exitVehicle(@PathVariable Long recordId) {
 
-        ParkingRecord record =
-                parkingRecordService.getRecordById(id);
+        ParkingRecord updatedRecord =parkingRecordService.exitVehicle(recordId);
+
+        return ParkingRecordMapper.toResponseDTO(updatedRecord);
+    }
+
+    @GetMapping("getARecord/{id}")
+    public ParkingRecordResponseDTO getParkingRecordById(@PathVariable Long id) {
+
+        ParkingRecord record =parkingRecordService.getRecordById(id);
 
         return ParkingRecordMapper.toResponseDTO(record);
     }
 
-    @GetMapping
+    @GetMapping("listAll")
     public List<ParkingRecordResponseDTO> getAllParkingRecords() {
 
         return parkingRecordService.getAllRecords()
@@ -55,9 +58,8 @@ public class ParkingRecordController {
                 .collect(Collectors.toList());
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteParkingRecord(
-            @PathVariable Long id) {
+    @DeleteMapping("delete/{id}")
+    public String deleteParkingRecord(@PathVariable Long id) {
 
         parkingRecordService.deleteRecord(id);
 

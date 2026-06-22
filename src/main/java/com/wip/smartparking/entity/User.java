@@ -9,8 +9,50 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
-    public Long getUserId() {
+    private String name;
+
+    @Column(unique = true)
+    private String email;
+
+    private String phone;
+
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Vehicle> vehicles;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Reservation> reservations;
+    
+    public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+    
+	public User(Long userId, String name, String email, String phone, String password, UserRole role,
+			List<Vehicle> vehicles, List<Reservation> reservations) {
+		super();
+		this.userId = userId;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.password = password;
+		this.role = role;
+		this.vehicles = vehicles;
+		this.reservations = reservations;
+	}
+
+	public Long getUserId() {
 		return userId;
 	}
 
@@ -74,27 +116,10 @@ public class User {
 		this.reservations = reservations;
 	}
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-
-    private String name;
-
-    @Column(unique = true)
-    private String email;
-
-    private String phone;
-
-    private String password;
-
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Vehicle> vehicles;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Reservation> reservations;
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", phone=" + phone + ", password="
+				+ password + ", role=" + role + ", vehicles=" + vehicles + ", reservations=" + reservations + "]";
+	}
+	
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Form</title>
+</head>
+<body>
+<div th:replace="layout/navbar :: navbar"></div>
+    <div class="container">
+        <div class="card form-card">
+            <h2>👤 Create User</h2>
+
+            <form action="/ui/users/save" method="post" th:object="${user}">
+                <!-- Validation Summary Alert Box -->
+                <div th:if="${#fields.hasErrors('*')}" style="background-color: #fee2e2; color: #991b1b; padding: 14px 18px; border-radius: 8px; font-size: 13.5px; font-weight: 600; margin-bottom: 20px; text-align: left; border: 1px solid rgba(239, 68, 68, 0.2);">
+                    <strong style="display: block; margin-bottom: 6px;">⚠️ Please correct the following errors:</strong>
+                    <ul style="margin: 0; padding-left: 20px; font-size: 13px; font-weight: 500; line-height: 1.5;">
+                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" th:field="*{name}" placeholder="John Doe" required />
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" th:field="*{email}" placeholder="john.doe@example.com" required />
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" th:field="*{password}" placeholder="Secure Password" required minlength="6" />
+                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text" th:field="*{phone}" placeholder="9876543210" required pattern="[0-9]{10}" title="Phone number must contain exactly 10 digits" />
+                        <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>User Role</label>
+                        <select th:field="*{role}" required>
+                            <option value="">-- Select Role --</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="USER">User (Customer)</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('role')}" th:errors="*{role}" style="color: red; font-size: 12px; margin-top: 4px;"></div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a href="/ui/users" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

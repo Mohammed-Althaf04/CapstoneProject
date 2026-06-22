@@ -6,10 +6,7 @@ import com.wip.smartparking.entity.ParkingSlot;
 public interface ParkingSlotService {
 
     ParkingSlot saveSlot(ParkingSlot slot);
-
     List<ParkingSlot> getAllSlots();
-
     ParkingSlot getSlotById(Long id);
-
     void deleteSlot(Long id);
 }

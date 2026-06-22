@@ -1,0 +1,39 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: parkingsqldb
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rps@12345
+      MYSQL_DATABASE: smart_parking_db
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysql", "-h", "127.0.0.1", "-u", "root", "-prps@12345", "-e", "SELECT 1;"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+
+  app:
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smartparking-app
+    ports:
+      - "8018:8018"
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://parkingsqldb:3306/smart_parking_db?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rps@12345
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+volumes:
+  mysql-data:
+

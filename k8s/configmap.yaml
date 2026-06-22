@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: sms-config
+data: 
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/smart_parking_db # Fixed: changed localhost to your MySQL service name
+  SPRING_JPA_HIBERNATE_DDL_AUTO: update                      # Recommended: changed from create-drop to prevent data loss on restarts
+  SPRING_JPA_SHOW_SQL: "true"                                # Wrapped boolean in quotes to prevent parsing issues
+  SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQLDialect

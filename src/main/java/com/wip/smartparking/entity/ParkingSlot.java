@@ -15,18 +15,30 @@ public class ParkingSlot {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long slotId;
-
     private String slotNumber;
 
     @Enumerated(EnumType.STRING)
     private SlotType slotType;
-
     private Integer floorNo;
 
     @Enumerated(EnumType.STRING)
     private SlotStatus status;
+    
+    public ParkingSlot() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+    
+	public ParkingSlot(Long slotId, String slotNumber, SlotType slotType, Integer floorNo, SlotStatus status) {
+		super();
+		this.slotId = slotId;
+		this.slotNumber = slotNumber;
+		this.slotType = slotType;
+		this.floorNo = floorNo;
+		this.status = status;
+	}
 
-    public Long getSlotId() {
+	public Long getSlotId() {
 		return slotId;
 	}
 
@@ -66,5 +78,10 @@ public class ParkingSlot {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "ParkingSlot [slotId=" + slotId + ", slotNumber=" + slotNumber + ", slotType=" + slotType + ", floorNo="
+				+ floorNo + ", status=" + status + "]";
+	}
 	
 }
