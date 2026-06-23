@@ -1,4 +1,9 @@
 package com.wip.smartparking.dto.response;
+/**
+ * Data Transfer Object (DTO) representing a serialized response payload for Auth data.
+ *
+ * @author althaf
+ */
 
 public class AuthResponse {
 

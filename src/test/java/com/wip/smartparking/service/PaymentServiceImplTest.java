@@ -17,6 +17,11 @@ import com.wip.smartparking.entity.Billing;
 import com.wip.smartparking.enums.BillingStatus;
 import com.wip.smartparking.exception.ResourceNotFoundException;
 import com.wip.smartparking.repository.BillingRepository;
+/**
+ * Service interface defining the business contract and operations for PaymentImplTest management.
+ *
+ * @author althaf
+ */
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentServiceImplTest {

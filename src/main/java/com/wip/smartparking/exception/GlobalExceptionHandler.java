@@ -8,6 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+/**
+ * Global controller advice to handle application-wide exceptions and return standardized error response payloads.
+ *
+ * @author Naveen Muthu
+ */
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

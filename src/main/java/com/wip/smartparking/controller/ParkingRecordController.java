@@ -14,6 +14,11 @@ import com.wip.smartparking.mapper.ParkingRecordMapper;
 import com.wip.smartparking.service.ParkingRecordService;
 
 import jakarta.validation.Valid;
+/**
+ * REST Controller exposing API endpoints for CRUD and business operations on ParkingRecord resources.
+ *
+ * @author Naveen Muthu
+ */
 
 @RestController
 @RequestMapping("/parking-records")

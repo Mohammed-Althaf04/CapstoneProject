@@ -18,6 +18,11 @@ import com.wip.smartparking.repository.ParkingSlotRepository;
 import com.wip.smartparking.repository.ReservationRepository;
 import com.wip.smartparking.repository.UserRepository;
 import com.wip.smartparking.repository.VehicleRepository;
+/**
+ * Service implementation class containing concrete business logic and transactional operations for Reservation.
+ *
+ * @author Naveen Muthu
+ */
 
 @Service
 public class ReservationServiceImpl implements ReservationService {

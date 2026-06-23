@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wip.smartparking.enums.UserRole;
 
 import jakarta.persistence.*;
+/**
+ * Entity model representing a persistent User database table mapped via JPA.
+ *
+ * @author Naveen Muthu
+ */
 
 @Entity
 @Table(name = "users")

@@ -1,4 +1,9 @@
 package com.wip.smartparking.exception;
+/**
+ * Custom exception class representing error states specifically related to ResourceNotFoundException.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ResourceNotFoundException extends RuntimeException {
 

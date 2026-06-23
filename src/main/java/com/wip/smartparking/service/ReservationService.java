@@ -3,6 +3,11 @@ package com.wip.smartparking.service;
 import java.util.List;
 
 import com.wip.smartparking.entity.Reservation;
+/**
+ * Service interface defining the business contract and operations for Reservation management.
+ *
+ * @author Naveen Muthu
+ */
 
 public interface ReservationService {
 

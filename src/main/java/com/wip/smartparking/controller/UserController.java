@@ -12,6 +12,11 @@ import com.wip.smartparking.mapper.UserMapper;
 import com.wip.smartparking.service.UserService;
 
 import jakarta.validation.Valid;
+/**
+ * REST Controller exposing API endpoints for CRUD and business operations on User resources.
+ *
+ * @author Naveen Muthu
+ */
 
 @RestController
 @RequestMapping("/users")

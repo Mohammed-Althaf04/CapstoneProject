@@ -1,3 +1,5 @@
+# Author: althaf
+# Description: Kubernetes ConfigMap holding system environment variables such as database connection configurations.
 apiVersion: v1
 kind: ConfigMap
 metadata: 

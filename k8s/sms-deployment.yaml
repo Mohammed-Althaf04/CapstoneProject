@@ -1,3 +1,5 @@
+# Author: althaf
+# Description: Kubernetes deployment config defining replica settings and containers for the Spring Boot service.
 apiVersion: apps/v1
 kind: Deployment
 metadata:

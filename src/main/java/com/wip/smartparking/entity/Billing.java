@@ -2,6 +2,11 @@ package com.wip.smartparking.entity;
 
 import com.wip.smartparking.enums.BillingStatus;
 import jakarta.persistence.*;
+/**
+ * Entity model representing a persistent Billing database table mapped via JPA.
+ *
+ * @author Naveen Muthu
+ */
 
 @Entity
 @Table(name = "billing")

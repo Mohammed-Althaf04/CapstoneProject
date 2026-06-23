@@ -1,6 +1,11 @@
 package com.wip.smartparking.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+/**
+ * Data Transfer Object (DTO) representing a request body for Login creation or updates.
+ *
+ * @author Naveen Muthu
+ */
 
 public class LoginRequest {
 

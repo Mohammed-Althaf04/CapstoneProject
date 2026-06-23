@@ -1,3 +1,5 @@
+# Author: Naveen Muthu
+# Description: Docker Compose script defining and orchestrating the Spring Boot application and MySQL container database services.
 services:
   mysql-db:
     image: mysql:8.0

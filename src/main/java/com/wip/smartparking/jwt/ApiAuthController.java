@@ -12,6 +12,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+/**
+ * REST Controller exposing API endpoints for CRUD and business operations on ApiAuth resources.
+ *
+ * @author althaf
+ */
 
 @RestController
 @RequestMapping("/api/auth")

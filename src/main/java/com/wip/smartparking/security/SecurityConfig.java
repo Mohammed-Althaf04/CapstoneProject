@@ -27,6 +27,11 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
     scheme = "bearer",
     bearerFormat = "JWT"
 )
+/**
+ * Spring Security configuration class defining authentication, authorization rules, and security filter chains.
+ *
+ * @author althaf
+ */
 public class SecurityConfig {
 
     @Bean

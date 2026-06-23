@@ -17,6 +17,11 @@ import com.wip.smartparking.repository.BillingRepository;
 import com.wip.smartparking.repository.ParkingRecordRepository;
 import com.wip.smartparking.repository.ParkingSlotRepository;
 import com.wip.smartparking.repository.VehicleRepository;
+/**
+ * Service implementation class containing concrete business logic and transactional operations for ParkingRecord.
+ *
+ * @author Naveen Muthu
+ */
 
 @Service
 public class ParkingRecordServiceImpl implements ParkingRecordService {

@@ -4,6 +4,11 @@ import com.wip.smartparking.enums.BillingStatus;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+/**
+ * Data Transfer Object (DTO) representing a request body for Billing creation or updates.
+ *
+ * @author Naveen Muthu
+ */
 
 public class BillingRequestDTO {
 

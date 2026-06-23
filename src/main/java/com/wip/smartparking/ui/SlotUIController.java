@@ -11,6 +11,11 @@ import com.wip.smartparking.entity.ParkingSlot;
 import com.wip.smartparking.entity.User;
 import com.wip.smartparking.repository.UserRepository;
 import com.wip.smartparking.service.ParkingSlotService;
+/**
+ * UI Controller for handling views, dashboard routing, and user interactions related to Slot resources.
+ *
+ * @author althaf
+ */
 
 @Controller
 @RequestMapping("/ui/slots")

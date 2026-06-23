@@ -3,6 +3,11 @@ package com.wip.smartparking.mapper;
 import com.wip.smartparking.dto.request.BillingRequestDTO;
 import com.wip.smartparking.dto.response.BillingResponseDTO;
 import com.wip.smartparking.entity.Billing;
+/**
+ * Utility mapper class to convert between Billing Entities and their corresponding Request/Response DTOs.
+ *
+ * @author Naveen Muthu
+ */
 
 public class BillingMapper {
 

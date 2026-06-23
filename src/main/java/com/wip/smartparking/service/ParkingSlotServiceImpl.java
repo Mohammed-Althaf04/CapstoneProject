@@ -10,6 +10,11 @@ import com.wip.smartparking.enums.SlotStatus;
 import com.wip.smartparking.exception.ParkingSlotException;
 import com.wip.smartparking.exception.ResourceNotFoundException;
 import com.wip.smartparking.repository.ParkingSlotRepository;
+/**
+ * Service implementation class containing concrete business logic and transactional operations for ParkingSlot.
+ *
+ * @author Naveen Muthu
+ */
 
 @Service
 public class ParkingSlotServiceImpl implements ParkingSlotService {

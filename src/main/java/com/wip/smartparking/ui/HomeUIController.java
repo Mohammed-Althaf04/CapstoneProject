@@ -19,6 +19,11 @@ import com.wip.smartparking.service.ParkingSlotService;
 import com.wip.smartparking.service.ReservationService;
 import com.wip.smartparking.service.VehicleService;
 import java.security.Principal;
+/**
+ * UI Controller for handling views, dashboard routing, and user interactions related to Home resources.
+ *
+ * @author althaf
+ */
 
 @Controller
 public class HomeUIController {

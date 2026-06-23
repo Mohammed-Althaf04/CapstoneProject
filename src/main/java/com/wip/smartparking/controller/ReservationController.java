@@ -12,6 +12,11 @@ import com.wip.smartparking.mapper.ReservationMapper;
 import com.wip.smartparking.service.ReservationService;
 
 import jakarta.validation.Valid;
+/**
+ * REST Controller exposing API endpoints for CRUD and business operations on Reservation resources.
+ *
+ * @author Naveen Muthu
+ */
 
 @RestController
 @RequestMapping("/reservations")

@@ -5,6 +5,11 @@ import java.time.LocalDateTime;
 import com.wip.smartparking.enums.ReservationStatus;
 
 import jakarta.persistence.*;
+/**
+ * Entity model representing a persistent Reservation database table mapped via JPA.
+ *
+ * @author Naveen Muthu
+ */
 
 
 @Entity

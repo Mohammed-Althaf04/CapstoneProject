@@ -22,6 +22,11 @@ import org.springframework.validation.BindingResult;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
+/**
+ * UI Controller for handling views, dashboard routing, and user interactions related to Vehicle resources.
+ *
+ * @author althaf
+ */
 
 @Controller
 @RequestMapping("/ui/vehicles")

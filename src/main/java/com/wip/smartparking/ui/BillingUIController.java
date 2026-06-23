@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
+/**
+ * UI Controller for handling views, dashboard routing, and user interactions related to Billing resources.
+ *
+ * @author althaf
+ */
 
 @Controller
 @RequestMapping("/ui/billing")

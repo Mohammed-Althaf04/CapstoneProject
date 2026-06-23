@@ -7,12 +7,16 @@ import com.wip.smartparking.enums.SlotStatus;
 import com.wip.smartparking.repository.ParkingSlotRepository;
 import com.wip.smartparking.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+/**
+ * Scheduled component that periodically runs tasks to manage and update reservation states.
+ *
+ * @author Naveen Muthu
+ */
 
 @Component
 public class ReservationScheduler {
@@ -23,7 +27,6 @@ public class ReservationScheduler {
     @Autowired
     private ParkingSlotRepository parkingSlotRepository;
 
-//    @Scheduled(cron = "0 * * * * *")
     public void checkReservations() {
 
         LocalDateTime now = LocalDateTime.now();

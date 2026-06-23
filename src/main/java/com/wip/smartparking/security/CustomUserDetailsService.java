@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.wip.smartparking.entity.User;
 import com.wip.smartparking.repository.UserRepository;
+/**
+ * Custom implementation of UserDetailsService to load user credentials from the database during authentication.
+ *
+ * @author althaf
+ */
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

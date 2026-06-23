@@ -2,6 +2,11 @@ package com.wip.smartparking.entity;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
+/**
+ * Entity model representing a persistent ParkingRecord database table mapped via JPA.
+ *
+ * @author Naveen Muthu
+ */
 
 @Entity
 @Table(name = "parking_records")

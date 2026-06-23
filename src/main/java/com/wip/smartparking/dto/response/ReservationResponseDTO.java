@@ -3,6 +3,11 @@ package com.wip.smartparking.dto.response;
 import java.time.LocalDateTime;
 
 import com.wip.smartparking.enums.ReservationStatus;
+/**
+ * Data Transfer Object (DTO) representing a serialized response payload for Reservation data.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ReservationResponseDTO {
 

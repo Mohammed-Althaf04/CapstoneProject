@@ -3,6 +3,11 @@ package com.wip.smartparking.dto.request;
 import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotNull;
+/**
+ * Data Transfer Object (DTO) representing a request body for ParkingRecord creation or updates.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ParkingRecordRequestDTO {
 

@@ -7,6 +7,11 @@ import com.wip.smartparking.entity.User;
 import com.wip.smartparking.entity.Vehicle;
 import com.wip.smartparking.entity.ParkingSlot;
 import com.wip.smartparking.enums.ReservationStatus;
+/**
+ * Utility mapper class to convert between Reservation Entities and their corresponding Request/Response DTOs.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ReservationMapper {
 

@@ -13,6 +13,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+/**
+ * Filter to intercept HTTP requests and validate JWT tokens for authentication.
+ *
+ * @author althaf
+ */
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

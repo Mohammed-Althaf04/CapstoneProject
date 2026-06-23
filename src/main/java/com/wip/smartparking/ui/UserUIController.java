@@ -11,6 +11,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+/**
+ * UI Controller for handling views, dashboard routing, and user interactions related to User resources.
+ *
+ * @author althaf
+ */
 
 @Controller
 @RequestMapping("/ui/users")

@@ -1,6 +1,11 @@
 package com.wip.smartparking.dto.response;
 
 import java.time.LocalDateTime;
+/**
+ * Data Transfer Object (DTO) representing a serialized response payload for ParkingRecord data.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ParkingRecordResponseDTO {
 

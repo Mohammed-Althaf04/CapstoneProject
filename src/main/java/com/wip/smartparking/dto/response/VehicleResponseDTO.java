@@ -1,6 +1,11 @@
 package com.wip.smartparking.dto.response;
 
 import com.wip.smartparking.enums.VehicleType;
+/**
+ * Data Transfer Object (DTO) representing a serialized response payload for Vehicle data.
+ *
+ * @author Naveen Muthu
+ */
 
 public class VehicleResponseDTO {
 

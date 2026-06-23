@@ -12,6 +12,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+/**
+ * Service helper class for generating, parsing, and validating JSON Web Tokens (JWT).
+ *
+ * @author althaf
+ */
 
 @Service
 public class JwtService {

@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 import com.wip.smartparking.entity.User;
 import com.wip.smartparking.exception.ResourceNotFoundException;
 import com.wip.smartparking.repository.UserRepository;
+/**
+ * Service implementation class containing concrete business logic and transactional operations for User.
+ *
+ * @author Naveen Muthu
+ */
 
 @Service
 public class UserServiceImpl implements UserService {

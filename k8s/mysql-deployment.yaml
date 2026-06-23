@@ -1,3 +1,5 @@
+# Author: althaf
+# Description: Kubernetes deployment configuration defining the MySQL database replica set.
 apiVersion: apps/v1
 kind: Deployment
 metadata:

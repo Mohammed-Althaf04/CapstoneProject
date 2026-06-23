@@ -3,6 +3,11 @@ package com.wip.smartparking.mapper;
 import com.wip.smartparking.dto.request.UserRequestDTO;
 import com.wip.smartparking.dto.response.UserResponseDTO;
 import com.wip.smartparking.entity.User;
+/**
+ * Utility mapper class to convert between User Entities and their corresponding Request/Response DTOs.
+ *
+ * @author Naveen Muthu
+ */
 
 public class UserMapper {
 

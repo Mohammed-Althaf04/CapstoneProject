@@ -12,6 +12,11 @@ import com.wip.smartparking.service.PaymentService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+/**
+ * REST Controller exposing API endpoints for CRUD and business operations on Payment resources.
+ *
+ * @author Naveen Muthu
+ */
 
 @RestController
 @RequestMapping("/api/payment")

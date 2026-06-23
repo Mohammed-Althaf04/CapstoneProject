@@ -2,6 +2,11 @@ package com.wip.smartparking.dto.response;
 
 import com.wip.smartparking.enums.SlotStatus;
 import com.wip.smartparking.enums.SlotType;
+/**
+ * Data Transfer Object (DTO) representing a serialized response payload for ParkingSlot data.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ParkingSlotResponseDTO {
 

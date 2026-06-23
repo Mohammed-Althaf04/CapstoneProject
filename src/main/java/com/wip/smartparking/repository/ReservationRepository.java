@@ -7,6 +7,11 @@ import com.wip.smartparking.entity.Reservation;
 import com.wip.smartparking.enums.ReservationStatus;
 import java.time.LocalDateTime;
 import java.util.List;
+/**
+ * Spring Data JPA repository interface providing database access methods for Reservation entities.
+ *
+ * @author Naveen Muthu
+ */
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 

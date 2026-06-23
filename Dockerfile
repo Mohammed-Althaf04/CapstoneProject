@@ -1,3 +1,5 @@
+# Author: Naveen Muthu
+# Description: Multi-stage Dockerfile containing build instructions using Maven and runner configuration using OpenJDK.
 FROM maven:3.8.5-openjdk-17 AS builder
 WORKDIR /app
 COPY pom.xml .

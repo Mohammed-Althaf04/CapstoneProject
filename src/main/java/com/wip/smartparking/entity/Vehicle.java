@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wip.smartparking.enums.VehicleType;
 
 import jakarta.persistence.*;
+/**
+ * Entity model representing a persistent Vehicle database table mapped via JPA.
+ *
+ * @author Naveen Muthu
+ */
 
 @Entity
 @Table(name = "vehicles")

@@ -12,6 +12,11 @@ import com.wip.smartparking.mapper.ParkingSlotMapper;
 import com.wip.smartparking.service.ParkingSlotService;
 
 import jakarta.validation.Valid;
+/**
+ * REST Controller exposing API endpoints for CRUD and business operations on ParkingSlot resources.
+ *
+ * @author Naveen Muthu
+ */
 
 @RestController
 @RequestMapping("/parking-slots")

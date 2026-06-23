@@ -13,6 +13,11 @@ import com.wip.smartparking.exception.PaymentFailureException;
 import com.wip.smartparking.exception.ResourceNotFoundException;
 import com.wip.smartparking.repository.BillingRepository;
 import com.wip.smartparking.repository.ParkingRecordRepository;
+/**
+ * Service implementation class containing concrete business logic and transactional operations for Billing.
+ *
+ * @author Naveen Muthu
+ */
 
 @Service
 public class BillingServiceImpl implements BillingService {

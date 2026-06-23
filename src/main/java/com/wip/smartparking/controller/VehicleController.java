@@ -12,6 +12,11 @@ import com.wip.smartparking.mapper.VehicleMapper;
 import com.wip.smartparking.service.VehicleService;
 
 import jakarta.validation.Valid;
+/**
+ * REST Controller exposing API endpoints for CRUD and business operations on Vehicle resources.
+ *
+ * @author Naveen Muthu
+ */
 
 @RestController
 @RequestMapping("/vehicles")

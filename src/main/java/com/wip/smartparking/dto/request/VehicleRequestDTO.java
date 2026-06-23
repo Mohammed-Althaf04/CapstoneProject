@@ -4,6 +4,11 @@ import com.wip.smartparking.enums.VehicleType;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+/**
+ * Data Transfer Object (DTO) representing a request body for Vehicle creation or updates.
+ *
+ * @author Naveen Muthu
+ */
 
 public class VehicleRequestDTO {
 

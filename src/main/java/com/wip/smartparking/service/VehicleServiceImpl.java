@@ -10,6 +10,11 @@ import com.wip.smartparking.entity.Vehicle;
 import com.wip.smartparking.exception.ResourceNotFoundException;
 import com.wip.smartparking.repository.UserRepository;
 import com.wip.smartparking.repository.VehicleRepository;
+/**
+ * Service implementation class containing concrete business logic and transactional operations for Vehicle.
+ *
+ * @author Naveen Muthu
+ */
 
 @Service
 public class VehicleServiceImpl implements VehicleService {

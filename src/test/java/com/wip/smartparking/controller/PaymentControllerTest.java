@@ -18,6 +18,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wip.smartparking.service.PaymentService;
+/**
+ * REST Controller exposing API endpoints for CRUD and business operations on PaymentTest resources.
+ *
+ * @author althaf
+ */
 
 @WebMvcTest(PaymentController.class)
 public class PaymentControllerTest {

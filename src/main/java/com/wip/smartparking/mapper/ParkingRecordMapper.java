@@ -5,6 +5,11 @@ import com.wip.smartparking.dto.response.ParkingRecordResponseDTO;
 import com.wip.smartparking.entity.ParkingRecord;
 import com.wip.smartparking.entity.ParkingSlot;
 import com.wip.smartparking.entity.Vehicle;
+/**
+ * Utility mapper class to convert between ParkingRecord Entities and their corresponding Request/Response DTOs.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ParkingRecordMapper {
 

@@ -1,6 +1,11 @@
 package com.wip.smartparking.exception;
 
 import java.time.LocalDateTime;
+/**
+ * Data model representing a standardized error response structure returned to client APIs.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ErrorResponse {
 

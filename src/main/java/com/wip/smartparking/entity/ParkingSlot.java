@@ -5,6 +5,11 @@ import com.wip.smartparking.enums.SlotStatus;
 import com.wip.smartparking.enums.SlotType;
 
 import jakarta.persistence.*;
+/**
+ * Entity model representing a persistent ParkingSlot database table mapped via JPA.
+ *
+ * @author Naveen Muthu
+ */
 
 
 @Entity

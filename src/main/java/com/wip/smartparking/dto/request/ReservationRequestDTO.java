@@ -6,6 +6,11 @@ import com.wip.smartparking.enums.ReservationStatus;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+/**
+ * Data Transfer Object (DTO) representing a request body for Reservation creation or updates.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ReservationRequestDTO {
 

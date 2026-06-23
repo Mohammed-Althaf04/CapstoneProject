@@ -3,6 +3,11 @@ package com.wip.smartparking.mapper;
 import com.wip.smartparking.dto.request.VehicleRequestDTO;
 import com.wip.smartparking.dto.response.VehicleResponseDTO;
 import com.wip.smartparking.entity.Vehicle;
+/**
+ * Utility mapper class to convert between Vehicle Entities and their corresponding Request/Response DTOs.
+ *
+ * @author Naveen Muthu
+ */
 
 public class VehicleMapper {
 

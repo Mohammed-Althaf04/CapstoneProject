@@ -15,6 +15,11 @@ import com.wip.smartparking.service.ParkingRecordService;
 import com.wip.smartparking.service.ParkingSlotService;
 import com.wip.smartparking.service.UserService;
 import com.wip.smartparking.service.VehicleService;
+/**
+ * UI Controller for handling views, dashboard routing, and user interactions related to ParkingRecord resources.
+ *
+ * @author althaf
+ */
 
 @Controller
 @RequestMapping("/ui/records")

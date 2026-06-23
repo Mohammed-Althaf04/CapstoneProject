@@ -2,6 +2,11 @@ package com.wip.smartparking.service;
 
 import java.util.List;
 import com.wip.smartparking.entity.User;
+/**
+ * Service interface defining the business contract and operations for User management.
+ *
+ * @author Naveen Muthu
+ */
 
 public interface UserService {
 

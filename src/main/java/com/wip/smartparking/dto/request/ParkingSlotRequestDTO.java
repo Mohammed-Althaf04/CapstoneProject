@@ -6,6 +6,11 @@ import com.wip.smartparking.enums.SlotType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+/**
+ * Data Transfer Object (DTO) representing a request body for ParkingSlot creation or updates.
+ *
+ * @author Naveen Muthu
+ */
 
 public class ParkingSlotRequestDTO {
 

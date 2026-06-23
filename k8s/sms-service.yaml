@@ -1,3 +1,5 @@
+# Author: althaf
+# Description: Kubernetes service definition exposing the Spring Boot web application load balancer.
 apiVersion: v1
 kind: Service
 metadata:

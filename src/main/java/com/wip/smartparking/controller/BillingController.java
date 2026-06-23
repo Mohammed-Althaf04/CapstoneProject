@@ -14,6 +14,11 @@ import com.wip.smartparking.mapper.BillingMapper;
 import com.wip.smartparking.service.BillingService;
 
 import jakarta.validation.Valid;
+/**
+ * REST Controller exposing API endpoints for CRUD and business operations on Billing resources.
+ *
+ * @author Naveen Muthu
+ */
 
 @RestController
 @RequestMapping("/billing")

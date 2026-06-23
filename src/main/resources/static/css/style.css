@@ -1,3 +1,7 @@
+/*
+  Author: althaf
+  Description: Global stylesheet defining the UI theme, glassmorphic layout components, and responsive grid system.
+*/
 /* Global Variables & Theme Config */
 :root {
     --bg-primary: #f8fafc;
